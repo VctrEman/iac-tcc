@@ -1,0 +1,46 @@
+Projeto tcc-tf
+Objetivo provisionar recursos para a infra do TCC, garantindo disponibilidade, perfomance e segurança
+
+Recursos:
+ - EC2 para o container do Metabase
+ - Redshift para o DW
+ - S3 bucket para a fonte
+
+Plano da IaC:
+ s3_resource
+ - Armazenamento dos dados usados no TCC
+ 
+ rs_cluster
+ - ELT do S3 (IAM attached)
+ - raw (copia bruta)
+ - dw (relatorio para o TCC)
+ 
+ metabase_instance
+ - Instalação de pacotes externos (http e https)
+ - Exposição do metabase p 3000 e ssh (app tier)
+ - ELT do redshift (IAM attached)
+ - boot automatizado
+
+firewall: 
+#aws ec2 describe-security-groups #ssh -i ~/.ssh/"terraform-aws.pem" user@dns
+#sudo ssh -i ~/.ssh/"terraform-aws" ec2-user@ec2-54-163-144-209.compute-1.amazonaws.com
+
+- SG app tier
+- SG dw tier
+
+IAM:
+metabase_read_rs
+rs_read_s3
+
+Provider AWS us-east-1
+
+
+
+
+#https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+variaveis:
+- ssh local - keyname us-east-1 #mv terraform-aws ~/.ssh/ move para o dir default ssh cp terraform-aws.pub ~/.ssh/
+- imagem da maquina
+- tipo de maquina
+- regiao
+- padrao de tag
