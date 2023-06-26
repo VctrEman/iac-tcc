@@ -31,6 +31,14 @@ resource "aws_security_group" "acesso-ssh-us-east-1" {
     cidr_blocks      = ["177.91.143.71/32",]
     ipv6_cidr_blocks = ["::/0"]
   }
+  ingress {
+    description      = "metabase"
+    from_port        = 3000
+    to_port          = 3000
+    protocol         = "tcp"
+    cidr_blocks      = ["177.91.143.71/32",]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   egress {
     from_port        = 0
